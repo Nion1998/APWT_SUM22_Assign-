@@ -31,7 +31,7 @@ class PagesController extends Controller
         $messages=[
             "required"=>"Please fillup this field",
             "name.max"=>"Name should not exceed 10 characters",
-            'conf_password.same'=> "Password & confirm password does not match",
+            'conf_password.same'=> " Does not match Password & confirm password",
         ];
 
         $this->validate($requst ,$rules,$messages);
