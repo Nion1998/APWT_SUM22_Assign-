@@ -14,4 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route ::get('/',[PagesController::class,'home'])->name('home');
+Route::get('/',[PagesController::class,'home'])->name('pages.home');
+Route::get('/register',[PagesController::class,'register'])->name('pages.register');
+Route::post('/register',[PagesController::class,'submit'])->name('pages.submit');
