@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\account;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 
@@ -20,7 +21,8 @@ class PagesController extends Controller
     {
         $rules = [
             "name"=>"required|max:20|min:5",
-                "email"=>"required|email|unique:users,email",
+                //"email"=>"required|email|unique:users,email",
+                "email"=>"required|email|email",
                 'password' =>[
                     'required',
                     Password::min(8)->letters()->numbers()->mixedCase()->symbols()
@@ -36,7 +38,14 @@ class PagesController extends Controller
 
         $this->validate($requst ,$rules,$messages);
         
+        $user = new account();
+        $user->name = $requst->name;
+        $user->email =$requst->email;
+        $user->password =$requst->password;
+        $user->save();
+
         
+        return redirect('/');
 
     }
 }
