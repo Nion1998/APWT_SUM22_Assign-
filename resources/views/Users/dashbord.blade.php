@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Admin</h1>
+    <h1>User</h1>
 </body>
 </html>

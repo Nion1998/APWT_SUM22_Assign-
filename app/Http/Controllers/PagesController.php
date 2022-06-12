@@ -74,11 +74,18 @@ class PagesController extends Controller
            $result=account::where('email',$email)->where('password',$password)->first();
 
           if($result){
-            if($result->type=='Admin')
+            if($result->type=='admin'){
+                return view('Admin.dashbord');
+            }
+            else{
+                return view('users.dashbord');
+            }
           }
           else{
             return redirect('/login');
           }
     }
+
+    
 
 }
