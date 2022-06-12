@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\account;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
+use LDAP\Result;
 
 class PagesController extends Controller
 {
@@ -17,7 +18,7 @@ class PagesController extends Controller
         return view('pages.register');
     }
 
-    function submit(Request $requst)
+    function submit(Request $request)
     {
         $rules = [
             "name"=>"required|max:20|min:5",
@@ -36,16 +37,48 @@ class PagesController extends Controller
             'conf_password.same'=> " Does not match Password & confirm password",
         ];
 
-        $this->validate($requst ,$rules,$messages);
+        $this->validate($request ,$rules,$messages);
         
         $user = new account();
-        $user->name = $requst->name;
-        $user->email =$requst->email;
-        $user->password =$requst->password;
+        $user->name = $request->name;
+        $user->email =$request->email;
+        $user->password =$request->password;
         $user->save();
 
         
         return redirect('/');
 
     }
+
+    function login()
+    {
+        return view('pages.login');
+    }
+
+    function loginsubmit(Request $request)
+    {
+        $rules = [
+                "email"=>"required|exists:users,email",
+                "password"=>"required|exists:users,password",
+        ];
+        
+        $messages=[
+                'email.exists'=>'No account is found using this mail',
+                'password.exists'=>'Password incorrect'
+        ];
+
+        $this->validate($request ,$rules,$messages);
+
+           $email=$request->email;
+           $password=$request->password;
+           $result=account::where('email',$email)->where('password',$password)->first();
+
+          if($result){
+            if($result->type=='Admin')
+          }
+          else{
+            return redirect('/login');
+          }
+    }
+
 }
