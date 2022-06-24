@@ -19,5 +19,5 @@ Route::get('/register',[PagesController::class,'register'])->name('pages.registe
 Route::post('/register',[PagesController::class,'submit'])->name('pages.submit');
 Route::get('/login',[PagesController::class,'login'])->name('pages.login');
 Route::post('/login',[PagesController::class,'loginsubmit'])->name('pages.loginsubmit');
-//Route::get('/dashbord',[PagesController::class,'admindashbord'])->name('admin.dashbord');
-//Route::get('/dashbord',[PagesController::class,'userdashbord'])->name('Users.dashbord');
+Route::get('/users/details',[PagesController::class,'list'])->name('users.details');
+Route::get('/users/details/{id}',[PagesController::class,'details'])->name('user.details');

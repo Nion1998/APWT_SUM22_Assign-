@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\account;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 use LDAP\Result;
+use sesstion;
+session_start();
+
 
 class PagesController extends Controller
 {
@@ -68,24 +72,42 @@ class PagesController extends Controller
         ];
 
         $this->validate($request ,$rules,$messages);
-
+        
+           $users = account::all();
            $email=$request->email;
            $password=$request->password;
            $result=account::where('email',$email)->where('password',$password)->first();
+           //Session(['id', $result->id]);
 
           if($result){
             if($result->type=='admin'){
-                return view('Admin.dashbord');
+                //return view('Admin.dashbord')->with('users',$users);
+                return redirect('/users/details')->with('users',$users);
             }
             else{
-                return view('users.dashbord');
+               // return view('Users.dashbord')->with('users',$users);
+                return redirect('/users/details')->with('users',$users);
             }
           }
           else{
             return redirect('/login');
           }
+          
+    }
+    
+    public function list(){
+        $users = account::all();
+        
+        return view('users.dashbord')->with('users',$users);
     }
 
+    public function details($id){
+        $users= account::where('id','=',$id)->first(); 
+        
+        return view('users.userdetails')-> with('users',$users);
+    }
+
+   
     
 
 }

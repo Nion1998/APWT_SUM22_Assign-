@@ -1,12 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Admin</h1>
-</body>
-</html>
+@extends('layouts.mainbar')
+@section('content')
+    <hr>
+    <center>
+        <h1>User Dashboard</h1>
+    </center>
+    <hr>
+    <table border="1">
+        <tr height="50px">
+            <th width="100px">Id</th>
+            <th width="100px">Name</th>
+        </tr>
+
+        @foreach($users as $users)
+            <tr height="50px">
+                <td>{{$users->id}}</td>
+                < <td><a href="{{route('user.details',['id'=>$users->id])}}">{{$users->name}}</a></td> 
+            </tr>
+        @endforeach
+    </table>
+    <hr>
+@endsection
