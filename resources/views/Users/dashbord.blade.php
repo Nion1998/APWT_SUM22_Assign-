@@ -14,7 +14,8 @@
         @foreach($users as $users)
             <tr height="50px">
                 <td>{{$users->id}}</td>
-                < <td><a href="{{route('user.details',['id'=>$users->id])}}">{{$users->name}}</a></td> 
+                <td><a href="{{route('user.details',['id'=>$users->id])}}">{{$users->name}}</a></td>
+                <td><a href="{{route('delete',['id'=>$users->id])}}">Delete</a></td>  
             </tr>
         @endforeach
     </table>

@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\account;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
-use LDAP\Result;
-use sesstion;
+use Illuminate\Contracts\Session\Session;
 session_start();
-
-
 class PagesController extends Controller
 {
     function home()
@@ -77,15 +73,19 @@ class PagesController extends Controller
            $email=$request->email;
            $password=$request->password;
            $result=account::where('email',$email)->where('password',$password)->first();
-           //Session(['id', $result->id]);
+        //    Session::put('id',1);
+        $id=$result->id;
+        
+        $_SESSION['id'] = $id;
 
           if($result){
             if($result->type=='admin'){
-                //return view('Admin.dashbord')->with('users',$users);
+                
                 return redirect('/users/details')->with('users',$users);
             }
             else{
                // return view('Users.dashbord')->with('users',$users);
+               
                 return redirect('/users/details')->with('users',$users);
             }
           }
@@ -105,6 +105,12 @@ class PagesController extends Controller
         $users= account::where('id','=',$id)->first(); 
         
         return view('users.userdetails')-> with('users',$users);
+    }
+
+    public function delete($id){
+        account::find($id)->delete();
+        return redirect('/users/details');
+        
     }
 
    
